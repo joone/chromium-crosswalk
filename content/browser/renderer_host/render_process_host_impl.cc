@@ -1535,6 +1535,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableVaapiAcceleratedVideoEncode,
 #endif
     "use-new-edk",  // TODO(use_chrome_edk): temporary.
+    switches::kRoundDisplay, //[device-radius]
   };
   renderer_cmd->CopySwitchesFrom(browser_cmd, kSwitchNames,
                                  arraysize(kSwitchNames));
