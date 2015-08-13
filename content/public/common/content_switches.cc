@@ -995,6 +995,9 @@ const char kMemoryPressureThresholdsMb[] = "memory-pressure-thresholds-mb";
 const char kTraceExportEventsToETW[] = "trace-export-events-to-etw";
 #endif
 
+// Enable device-radius CSS Media Query.
+const char kRoundDisplay[]                 = "round-display";
+
 // Don't dump stuff here, follow the same order as the header.
 
 }  // namespace switches
