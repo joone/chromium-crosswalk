@@ -1555,6 +1555,7 @@ bool RenderWidgetHostViewAndroid::HasAcceleratedSurface(
   return false;
 }
 
+//?
 void RenderWidgetHostViewAndroid::GetScreenInfo(blink::WebScreenInfo* result) {
   // ScreenInfo isn't tied to the widget on Android. Always return the default.
   RenderWidgetHostViewBase::GetDefaultScreenInfo(result);
