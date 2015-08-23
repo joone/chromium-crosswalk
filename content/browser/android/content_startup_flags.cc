@@ -114,6 +114,9 @@ void SetContentCommandLineFlags(bool single_process,
           switches::kEnableAndroidCompositorAnimationTimelines))
     layer_settings.use_compositor_animation_timelines = true;
   Compositor::SetLayerSettings(layer_settings);
+
+  // FIXME: only for Android Wear
+  parsed_command_line->AppendSwitch(switches::kRoundDisplay);
 }
 
 }  // namespace content

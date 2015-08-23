@@ -1133,12 +1133,21 @@ void RenderWidgetHostImpl::GetWebScreenInfo(blink::WebScreenInfo* result) {
   else
     RenderWidgetHostViewBase::GetDefaultScreenInfo(result);
 
-  //[device-radius]
-  //FIXME
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kRoundDisplay))
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kRoundDisplay)) {
+#if defined(OS_ANDROID)
+    RenderViewHostImpl* rvh = static_cast<RenderViewHostImpl*>(
+        IsRenderView() ? RenderViewHost::From(this) : NULL);
+    content::WebPreferences prefs = rvh->GetWebkitPreferences();
+    // FIXME: The deviceRadius value is set by Andorid Wear Java API, but we
+    // need to find a way to get this value in Chromium.
+    result->deviceRadius = prefs.device_radius;
+#else
+    // FIXME: should be 0 on desktop, but the below value is used for testing.
     result->deviceRadius = result->rect.width / 2;
-  else
-    result->deviceRadius = -1;
+#endif
+   } else {
+     result->deviceRadius = 0;
+  }
 
   // TODO(sievers): find a way to make this done another way so the method
   // can be const.
