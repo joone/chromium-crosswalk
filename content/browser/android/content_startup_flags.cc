@@ -93,6 +93,9 @@ void SetContentCommandLineFlags(bool single_process,
           switches::kDisableAndroidCompositorAnimationTimelines);
   Compositor::SetLayerSettings(layer_settings);
 #endif
+
+  // FIXME: only for Android Wear
+  parsed_command_line->AppendSwitch(switches::kRoundDisplay);
 }
 
 }  // namespace content
