@@ -62,6 +62,17 @@ static inline bool featureWithValidIdent(const String& mediaFeature, CSSValueID 
     return false;
 }
 
+static inline bool featureWithValidDeviceRadius(const String& mediaFeature, const CSSParserValue* value)
+{
+    if (!(CSSPrimitiveValue::isLength((CSSPrimitiveValue::UnitType)value->unit) || (value->unit == CSSPrimitiveValue::CSS_NUMBER && value->fValue == 0) || value->unit == CSSPrimitiveValue::CSS_PERCENTAGE) 
+        || value->fValue < 0)
+        return false;
+
+    return mediaFeature == deviceRadiusMediaFeature
+        || mediaFeature == minDeviceRadiusMediaFeature
+        || mediaFeature == maxDeviceRadiusMediaFeature;
+}
+
 static inline bool featureWithValidPositiveLength(const String& mediaFeature, const CSSParserToken& token)
 {
     if (!(CSSPrimitiveValue::isLength(token.unitType()) || (token.type() == NumberToken && token.numericValue() == 0)) || token.numericValue() < 0)
@@ -158,7 +169,8 @@ static inline bool featureWithoutValue(const String& mediaFeature)
         || mediaFeature == anyPointerMediaFeature
         || mediaFeature == devicePixelRatioMediaFeature
         || mediaFeature == resolutionMediaFeature
-        || mediaFeature == scanMediaFeature;
+        || mediaFeature == scanMediaFeature
+        || mediaFeature == deviceRadiusMediaFeature;
 }
 
 bool MediaQueryExp::isViewportDependent() const
@@ -214,6 +226,7 @@ PassOwnPtrWillBeRawPtr<MediaQueryExp> MediaQueryExp::createIfValid(const String&
         } else if (token.type() == NumberToken || token.type() == PercentageToken || token.type() == DimensionToken) {
             // Check for numeric token types since it is only safe for these types to call numericValue.
             if (featureWithValidDensity(lowerMediaFeature, token)
+                || featureWithValidDeviceRadius(lowerMediaFeature, value)
                 || featureWithValidPositiveLength(lowerMediaFeature, token)) {
                 // Media features that must have non-negative <density>, ie. dppx, dpi or dpcm,
                 // or Media features that must have non-negative <length> or number value.

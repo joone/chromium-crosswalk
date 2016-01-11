@@ -355,6 +355,11 @@ static bool computeLength(const MediaQueryExpValue& value, const MediaValues& me
         return !mediaValues.strictMode() || !result;
     }
 
+    if (value.unit == CSSPrimitiveValue::CSS_PERCENTAGE) {
+        result = clampTo<int>(mediaValues.deviceWidth() * (std::min<double>(50, value.value) / 100));
+        return true;
+    }
+
     if (CSSPrimitiveValue::isLength(value.unit))
         return mediaValues.computeLength(value.value, value.unit, result);
     return false;
@@ -385,6 +390,21 @@ static bool deviceWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFe
     // assume if we have a device, assume non-zero
     return true;
 }
+
+static bool deviceRadiusMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
+{
+    // Check if the shape of device is round
+    if (mediaValues.deviceRadius() < 0)
+        return false;
+
+    if (value.isValid())
+        return computeLengthAndCompare(value, op, mediaValues, mediaValues.deviceRadius());
+
+    // ({,min-,max-}device-radius)
+    // assume if we have a device, assume non-zero
+    return true;
+}
+
 
 static bool heightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix op, const MediaValues& mediaValues)
 {
@@ -488,6 +508,16 @@ static bool minWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeatu
 static bool maxWidthMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
 {
     return widthMediaFeatureEval(value, MaxPrefix, mediaValues);
+}
+
+static bool minDeviceRadiusMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
+{
+    return deviceRadiusMediaFeatureEval(value, MinPrefix, mediaValues);
+}
+
+static bool maxDeviceRadiusMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
+{
+    return deviceRadiusMediaFeatureEval(value, MaxPrefix, mediaValues);
 }
 
 static bool minDeviceHeightMediaFeatureEval(const MediaQueryExpValue& value, MediaFeaturePrefix, const MediaValues& mediaValues)
