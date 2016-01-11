@@ -37,6 +37,7 @@ public:
     WebDisplayMode displayMode() const override;
     Document* document() const override;
     bool hasValues() const override;
+    int deviceRadius() const override;
 
     DECLARE_VIRTUAL_TRACE();
 
