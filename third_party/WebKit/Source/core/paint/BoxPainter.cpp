@@ -575,7 +575,7 @@ void BoxPainter::paintBorder(const LayoutBoxModelObject& obj, const PaintInfo& i
 
     const BoxBorderPainter borderPainter(rect, style, bleedAvoidance,
         includeLogicalLeftEdge, includeLogicalRightEdge);
-    borderPainter.paintBorder(info, rect);
+    borderPainter.paintBorder(obj, info, rect);
 }
 
 void BoxPainter::paintBoxShadow(const PaintInfo& info, const LayoutRect& paintRect, const ComputedStyle& style, ShadowStyle shadowStyle, bool includeLogicalLeftEdge, bool includeLogicalRightEdge)

@@ -217,6 +217,8 @@ private:
     bool parseBorderImageWidth(RefPtrWillBeRawPtr<CSSQuadValue>&);
     bool parseBorderImageOutset(RefPtrWillBeRawPtr<CSSQuadValue>&);
     bool parseRadii(RefPtrWillBeRawPtr<CSSPrimitiveValue> radii[4], RefPtrWillBeRawPtr<CSSPrimitiveValue> radii2[4], CSSParserValueList*, CSSPropertyID = CSSPropertyInvalid);
+    bool parseBorderRadius(CSSPropertyID, bool important);
+    PassRefPtrWillBeRawPtr<CSSValue> parseBorderBoundary();
 
     PassRefPtrWillBeRawPtr<CSSValue> parseReflect();
 
