@@ -643,6 +643,7 @@ public:
     bool isRelPositioned() const { return m_bitfields.isRelPositioned(); } // relative positioning
     bool isStickyPositioned() const { return m_bitfields.isStickyPositioned(); } // sticky positioning
     bool isPositioned() const { return m_bitfields.isPositioned(); }
+    bool isPolarPositioned() const { return m_bitfields.isPolarPositioned(); }
 
     bool isText() const  { return m_bitfields.isText(); }
     bool isBox() const { return m_bitfields.isBox(); }
@@ -1571,6 +1572,7 @@ private:
             IsRelativelyPositioned = 1,
             IsOutOfFlowPositioned = 2,
             IsStickyPositioned = 3,
+            IsPolarPositioned = 4,
         };
 
     public:
@@ -1758,7 +1760,7 @@ private:
     private:
         // This is the cached 'position' value of this object
         // (see ComputedStyle::position).
-        unsigned m_positionedState : 2; // PositionedState
+        unsigned m_positionedState : 3; // PositionedState
         unsigned m_selectionState : 3; // SelectionState
         // Mutable for getter which lazily update this field.
         mutable unsigned m_boxDecorationBackgroundState : 2; // BoxDecorationBackgroundState
@@ -1770,11 +1772,12 @@ private:
         bool isStickyPositioned() const { return m_positionedState == IsStickyPositioned; }
         bool isInFlowPositioned() const { return m_positionedState == IsRelativelyPositioned || m_positionedState == IsStickyPositioned; }
         bool isPositioned() const { return m_positionedState != IsStaticallyPositioned; }
+        bool isPolarPositioned() const { return m_positionedState == IsPolarPositioned; }
 
         void setPositionedState(int positionState)
         {
             // This mask maps FixedPosition and AbsolutePosition to IsOutOfFlowPositioned, saving one bit.
-            m_positionedState = static_cast<PositionedState>(positionState & 0x3);
+            m_positionedState = static_cast<PositionedState>(positionState & 0x7);
         }
         void clearPositionedState() { m_positionedState = StaticPosition; }
 

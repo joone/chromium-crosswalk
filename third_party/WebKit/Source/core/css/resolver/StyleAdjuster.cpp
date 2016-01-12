@@ -242,6 +242,13 @@ void StyleAdjuster::adjustComputedStyle(ComputedStyle& style, const ComputedStyl
         if (isSVGTextElement(*element))
             style.clearMultiCol();
     }
+    
+    // Text should be cetner aligned by default in the polar coordinate.
+    if (style.position() == PolarPosition) {
+        if (style.textAlign() == TASTART)
+            style.setTextAlign(WEBKIT_CENTER);
+    }
+
     adjustStyleForAlignment(style, parentStyle);
 }
 
