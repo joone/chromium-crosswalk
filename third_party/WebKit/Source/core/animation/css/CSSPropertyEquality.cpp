@@ -287,6 +287,8 @@ bool CSSPropertyEquality::propertiesEqual(CSSPropertyID prop, const ComputedStyl
     case CSSPropertyWebkitTextStrokeColor:
         return a.textStrokeColor() == b.textStrokeColor()
             && a.visitedLinkTextStrokeColor() == b.visitedLinkTextStrokeColor();
+    case CSSPropertyPolarAngle:
+        return a.polarAngle() == b.polarAngle();
     case CSSPropertyTransform:
         return a.transform() == b.transform();
     case CSSPropertyTranslate:

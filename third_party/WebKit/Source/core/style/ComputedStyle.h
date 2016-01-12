@@ -283,6 +283,8 @@ protected:
 
         unsigned isLink : 1;
 
+        unsigned polarAnchor: 3;
+
         mutable unsigned hasRemUnits : 1;
         // If you add more style bits here, you will also need to update ComputedStyle::copyNonInheritedFromCached()
         // 63 bits
@@ -337,6 +339,7 @@ protected:
         noninherited_flags.affectedByDrag = false;
         noninherited_flags.isLink = false;
         noninherited_flags.hasRemUnits = false;
+        noninherited_flags.polarAnchor = initialPolarAnchor();
     }
 
 private:
@@ -1549,6 +1552,14 @@ public:
         return true;
     }
 
+    void setPolarAnchor(EPolarAnchor v) { noninherited_flags.polarAnchor = v; }
+    void setPolarAngle(int v) {  SET_VAR(surround, offset.m_angle, Length(v, Fixed)); }
+    void setPolarDistance(int v) { SET_VAR(surround, offset.m_distance, Length(v, Percent)); }
+
+    EPolarAnchor polarAnchor() const { return static_cast<EPolarAnchor>(noninherited_flags.polarAnchor); }
+    unsigned polarDistance() const { return surround->offset.distance().intValue();  }
+    int polarAngle() const { return surround->offset.angle().intValue(); }
+
     // A unique style is one that has matches something that makes it impossible to share.
     bool unique() const { return noninherited_flags.unique; }
     void setUnique() { noninherited_flags.unique = true; }
@@ -1595,6 +1606,9 @@ public:
     static EOverflow initialOverflowY() { return OVISIBLE; }
     static EPageBreak initialPageBreak() { return PBAUTO; }
     static EPosition initialPosition() { return StaticPosition; }
+    static EPolarAnchor initialPolarAnchor() { return PCENTER; }
+    static int initialPolarAngle() { return 0; }
+    static unsigned initialPolarDistance() { return 0; }
     static ETableLayout initialTableLayout() { return TAUTO; }
     static EUnicodeBidi initialUnicodeBidi() { return UBNormal; }
     static ETextTransform initialTextTransform() { return TTNONE; }

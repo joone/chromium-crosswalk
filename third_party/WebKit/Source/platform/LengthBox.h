@@ -40,6 +40,8 @@ public:
         , m_right(t)
         , m_top(t)
         , m_bottom(t)
+        , m_distance(t)
+        , m_angle(t)
     {
     }
 
@@ -48,6 +50,8 @@ public:
         , m_right(Length(v, Fixed))
         , m_top(Length(v, Fixed))
         , m_bottom(Length(v, Fixed))
+        , m_distance(Length(v, Percent))
+        , m_angle(Length(v, Fixed))
     {
     }
 
@@ -71,6 +75,8 @@ public:
     const Length& right() const { return m_right; }
     const Length& top() const { return m_top; }
     const Length& bottom() const { return m_bottom; }
+    const Length& distance() const { return m_distance; }
+    const Length& angle() const { return m_angle; }
 
     const Length& logicalLeft(WritingMode) const;
     const Length& logicalRight(WritingMode) const;
@@ -100,6 +106,8 @@ public:
     Length m_right;
     Length m_top;
     Length m_bottom;
+    Length m_distance;
+    Length m_angle;
 };
 
 } // namespace blink

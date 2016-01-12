@@ -88,8 +88,13 @@ enum EPosition {
     RelativePosition = 1,
     AbsolutePosition = 2,
     StickyPosition = 3,
+    PolarPosition = 4,
     // This value is required to pack our bits efficiently in LayoutObject.
     FixedPosition = 6
+};
+
+enum EPolarAnchor {
+    PLEFT, PRIGHT, PCENTER, PTOP, PBOTTOM
 };
 
 enum EFloat {

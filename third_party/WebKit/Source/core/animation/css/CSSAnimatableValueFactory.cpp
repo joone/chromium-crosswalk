@@ -521,6 +521,8 @@ PassRefPtrWillBeRawPtr<AnimatableValue> CSSAnimatableValueFactory::create(CSSPro
         return createFromDouble(style.perspective(), AnimatableDouble::InterpolationIsNonContinuousWithZero);
     case CSSPropertyPerspectiveOrigin:
         return createFromLengthPoint(style.perspectiveOrigin(), style);
+    case CSSPropertyPolarAngle:
+        return createFromDouble(style.polarAngle());
     case CSSPropertyShapeOutside:
         return createFromShapeValue(style.shapeOutside());
     case CSSPropertyShapeMargin:

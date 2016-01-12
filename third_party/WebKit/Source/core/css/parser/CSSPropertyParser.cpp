@@ -718,6 +718,15 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
     case CSSPropertyObjectPosition:
         parsedValue = parsePosition(m_valueList);
         break;
+    case CSSPropertyPolarAngle:
+       validPrimitive = validUnit(value, FAngle);
+        break;
+    case CSSPropertyPolarDistance:
+        validPrimitive = validUnit(value, FLength | FPercent | FNonNeg | unitless);
+        break;
+    case CSSPropertyPolarAnchor:
+        //parsedValue = parsePosition(m_valueList);
+        break;
     case CSSPropertyListStyleImage:     // <uri> | none | inherit
     case CSSPropertyBorderImageSource:
     case CSSPropertyWebkitMaskBoxImageSource:

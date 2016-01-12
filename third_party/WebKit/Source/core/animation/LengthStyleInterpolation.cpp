@@ -203,6 +203,7 @@ LengthStyleInterpolation::LengthSetter LengthStyleInterpolation::lengthSetterFor
     case CSSPropertyOutlineOffset:
     case CSSPropertyOutlineWidth:
     case CSSPropertyPerspective:
+    case CSSPropertyPolarAngle:
     case CSSPropertyStrokeWidth:
     case CSSPropertyVerticalAlign:
     case CSSPropertyWebkitBorderHorizontalSpacing:

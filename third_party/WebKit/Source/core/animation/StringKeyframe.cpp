@@ -282,6 +282,7 @@ PassRefPtrWillBeRawPtr<Interpolation> StringKeyframe::CSSPropertySpecificKeyfram
     case CSSPropertyMarginTop:
     case CSSPropertyMotionOffset:
     case CSSPropertyOutlineOffset:
+    case CSSPropertyPolarAngle:
     case CSSPropertyRight:
     case CSSPropertyStrokeDashoffset:
     case CSSPropertyTop:

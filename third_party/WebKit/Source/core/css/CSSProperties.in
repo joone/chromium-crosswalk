@@ -250,6 +250,11 @@ perspective interpolable, converter=convertPerspective
 perspective-origin interpolable, converter=convertPerspectiveOrigin
 pointer-events inherited
 position
+polar-anchor
+polar-angle interpolable, type_name=int
+polar-distance interpolable, type_name=unsigned int
+//polar-angle interpolable, converter=convertLength
+//polar-distance custom_all, converter=convertNumberOrPercentage
 quotes inherited, converter=convertQuotes
 resize custom_value
 right interpolable, initial=initialOffset, converter=convertLengthOrAuto

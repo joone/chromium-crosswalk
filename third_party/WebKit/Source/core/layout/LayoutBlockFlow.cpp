@@ -484,6 +484,14 @@ void LayoutBlockFlow::determineLogicalLeftPositionForChild(LayoutBox& child)
     else if (positionToAvoidFloats > initialStartPosition)
         newPosition = std::max(newPosition, positionToAvoidFloats);
 
+    if (child.isPolarPositioned()) {
+         int angle = child.style()->polarAngle();
+         float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
+         float childWidth = child.logicalWidth().toFloat();
+         float childLeft = sin(M_PI / 180 * angle) * radius + logicalWidth().toFloat()/2.0 - childWidth/2.0;
+         newPosition = LayoutUnit(childLeft);
+     }
+
     setLogicalLeftForChild(child, style()->isLeftToRightDirection() ? newPosition : totalAvailableLogicalWidth - newPosition - logicalWidthForChild(child));
 }
 
@@ -577,6 +585,14 @@ void LayoutBlockFlow::layoutBlockChild(LayoutBox& child, MarginInfo& marginInfo,
     if (paginated) {
         logicalTopAfterClear = adjustBlockChildForPagination(logicalTopAfterClear, estimateWithoutPagination, child,
             atBeforeSideOfBlock && logicalTopBeforeClear == logicalTopAfterClear);
+    }
+
+    if (child.isPolarPositioned()) {
+        int angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
+        float childHeight = child.logicalHeight().toFloat();
+        float childTop = -cos(M_PI / 180 * angle) * radius + logicalWidth().toFloat() / 2.0 - childHeight / 2.0;
+        logicalTopAfterClear = LayoutUnit(childTop);
     }
 
     setLogicalTopForChild(child, logicalTopAfterClear);

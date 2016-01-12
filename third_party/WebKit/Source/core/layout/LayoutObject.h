@@ -502,6 +502,7 @@ public:
     bool isRelPositioned() const { return m_bitfields.isRelPositioned(); } // relative positioning
     bool isStickyPositioned() const { return m_bitfields.isStickyPositioned(); } // sticky positioning
     bool isPositioned() const { return m_bitfields.isPositioned(); }
+    bool isPolarPositioned() const { return m_bitfields.isPolarPositioned(); }
 
     bool isText() const  { return m_bitfields.isText(); }
     bool isBox() const { return m_bitfields.isBox(); }
@@ -1273,6 +1274,7 @@ private:
             IsRelativelyPositioned = 1,
             IsOutOfFlowPositioned = 2,
             IsStickyPositioned = 3,
+            IsPolarPositioned = 4,
         };
 
     public:
@@ -1385,6 +1387,7 @@ private:
         bool isStickyPositioned() const { return m_positionedState == IsStickyPositioned; }
         bool isInFlowPositioned() const { return m_positionedState == IsRelativelyPositioned || m_positionedState == IsStickyPositioned; }
         bool isPositioned() const { return m_positionedState != IsStaticallyPositioned; }
+        bool isPolarPositioned() const { return m_positionedState == IsPolarPositioned; }
 
         void setPositionedState(int positionState)
         {

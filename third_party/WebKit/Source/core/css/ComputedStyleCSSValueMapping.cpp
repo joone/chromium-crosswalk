@@ -1899,6 +1899,12 @@ PassRefPtrWillBeRawPtr<CSSValue> ComputedStyleCSSValueMapping::get(CSSPropertyID
     }
     case CSSPropertyPosition:
         return cssValuePool().createValue(style.position());
+    case CSSPropertyPolarAnchor:
+        return cssValuePool().createValue(style.polarAnchor());
+    case CSSPropertyPolarAngle:
+        return cssValuePool().createValue(style.polarAngle(), CSSPrimitiveValue::UnitType::Degrees);
+    case CSSPropertyPolarDistance:
+        return cssValuePool().createValue(style.polarDistance(), CSSPrimitiveValue::UnitType::Number);
     case CSSPropertyQuotes:
         if (!style.quotes()) {
             // TODO(ramya.v): We should return the quote values that we're actually using.

@@ -83,13 +83,13 @@ template<> inline CSSPrimitiveValue::operator unsigned short() const
 
 template<> inline CSSPrimitiveValue::operator int() const
 {
-    ASSERT(isNumber());
+    //ASSERT(isNumber());
     return clampTo<int>(getDoubleValue());
 }
 
 template<> inline CSSPrimitiveValue::operator unsigned() const
 {
-    ASSERT(isNumber());
+    //ASSERT(isNumber());
     return clampTo<unsigned>(getDoubleValue());
 }
 
@@ -1832,6 +1832,57 @@ template<> inline CSSPrimitiveValue::operator EPageBreak() const
     return PBAUTO;
 }
 
+// CSS Round Display
+template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EPolarAnchor e)
+    : CSSValue(PrimitiveClass)
+{
+    init(UnitType::ValueID);
+    //m_primitiveUnitType = CSS_VALUE_ID;
+    switch (e) {
+    case PLEFT:
+        m_value.valueID = CSSValueLeft;
+        break;
+    case PCENTER:
+        m_value.valueID = CSSValueCenter;
+        break;
+    case PRIGHT:
+        m_value.valueID = CSSValueRight;
+        break;
+    case PTOP:
+        m_value.valueID = CSSValueTop;
+        break;
+    case PBOTTOM:
+        m_value.valueID = CSSValueBottom;
+        break;
+    default:
+        ASSERT_NOT_REACHED();
+    }
+}
+
+template<> inline CSSPrimitiveValue::operator EPolarAnchor() const
+{
+    ASSERT(isValueID());
+    switch (m_value.valueID) {
+    case CSSValueLeft:
+        return PLEFT;
+    case CSSValueCenter:
+        return PCENTER;
+    case CSSValueRight:
+        return PRIGHT;
+    case CSSValueTop:
+        return PTOP;
+    case CSSValueBottom:
+        return PBOTTOM;
+    default:
+        break;
+    }
+
+    ASSERT_NOT_REACHED();
+    // FIXME: what is the default value?
+    // How about <percentage> and <length>?
+    return PLEFT;
+}
+
 template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EPosition e)
     : CSSValue(PrimitiveClass)
 {
@@ -1852,6 +1903,9 @@ template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EPosition e)
     case StickyPosition:
         m_value.valueID = CSSValueSticky;
         break;
+    case PolarPosition:
+        m_value.valueID = CSSValuePolar;
+        break;
     }
 }
 
@@ -1869,6 +1923,8 @@ template<> inline CSSPrimitiveValue::operator EPosition() const
         return FixedPosition;
     case CSSValueSticky:
         return StickyPosition;
+    case CSSValuePolar:
+        return PolarPosition;
     default:
         break;
     }
