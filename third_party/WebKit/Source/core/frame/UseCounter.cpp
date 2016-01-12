@@ -548,6 +548,7 @@ int UseCounter::mapCSSPropertyIdToCSSSampleIdForHistogram(int id)
     case CSSPropertyGridGap: return 513;
     case CSSPropertyFontFeatureSettings: return 514;
     case CSSPropertyVariable: return 515;
+    case CSSPropertyBorderBoundary: return 508;
 
     // 1. Add new features above this line (don't change the assigned numbers of the existing
     // items).

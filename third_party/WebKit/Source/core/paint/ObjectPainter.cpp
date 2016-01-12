@@ -239,6 +239,9 @@ void ObjectPainter::paintInlineChildrenOutlines(const PaintInfo& paintInfo, cons
         if (child->isLayoutInline() && !toLayoutInline(child)->hasSelfPaintingLayer())
             child->paint(childPaintInfo, paintOffset);
     }
+    const BorderEdge commonEdgeInfo(outlineWidth,
+        m_layoutObject.resolveColor(styleToUse, CSSPropertyOutlineColor), styleToUse.outlineStyle());
+    BoxBorderPainter(styleToUse, outer, inner, commonEdgeInfo).paintBorder(*m_layoutObject.enclosingBoxModelObject(), paintInfo, outer);
 }
 
 void ObjectPainter::addPDFURLRectIfNeeded(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)

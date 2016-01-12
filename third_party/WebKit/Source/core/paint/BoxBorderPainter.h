@@ -15,6 +15,7 @@ namespace blink {
 class ComputedStyle;
 class IntRect;
 class LayoutBox;
+class LayoutBoxModelObject;
 class LayoutRect;
 struct PaintInfo;
 
@@ -28,6 +29,7 @@ public:
         const BorderEdge& uniformEdgeInfo);
 
     void paintBorder(const PaintInfo&, const LayoutRect& borderRect) const;
+    void paintBorder(LayoutBoxModelObject& ,const PaintInfo&, const LayoutRect& borderRect) const;
 
 private:
     struct ComplexBorderInfo;
