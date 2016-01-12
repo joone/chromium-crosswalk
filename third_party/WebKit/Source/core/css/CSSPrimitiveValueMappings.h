@@ -281,6 +281,41 @@ template<> inline EBorderStyle CSSPrimitiveValue::convertTo() const
     return (EBorderStyle)(m_value.valueID - CSSValueNone);
 }
 
+template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EBorderBoundary e)
+    : CSSValue(PrimitiveClass)
+{
+	 init(UnitType::ValueID);
+	 switch (e) {
+	 case BOUNDARY_NONE:
+	    m_value.valueID = CSSValueNone;
+	    break;
+	 case DISPLAY:
+	    m_value.valueID = CSSValueDisplay;
+	    break;
+	 case PARENT:
+        m_value.valueID = CSSValueParent;
+        break;
+	 }
+}
+
+template<> inline EBorderBoundary CSSPrimitiveValue::convertTo() const
+{
+    ASSERT(isValueID());
+    switch (m_value.valueID) {
+    case CSSValueNone:
+        return BOUNDARY_NONE;
+    case CSSValueDisplay:
+        return DISPLAY;
+    case CSSValueParent:
+        return PARENT;
+    default:
+        break;
+    }
+
+    ASSERT_NOT_REACHED();
+    return DISPLAY;
+}
+
 template<> inline OutlineIsAuto CSSPrimitiveValue::convertTo() const
 {
     if (m_value.valueID == CSSValueAuto)

@@ -19,7 +19,7 @@ namespace blink {
 
 namespace {
 
-void paintSingleRectangleOutline(const PaintInfo& paintInfo, const IntRect& rect, const ComputedStyle& style, const Color& color)
+void paintSingleRectangleOutline(const LayoutObject& layoutObject, const PaintInfo& paintInfo, const IntRect& rect, const ComputedStyle& style, const Color& color)
 {
     ASSERT(!style.outlineStyleIsAuto());
 
@@ -28,7 +28,7 @@ void paintSingleRectangleOutline(const PaintInfo& paintInfo, const IntRect& rect
     LayoutRect outer(inner);
     outer.inflate(style.outlineWidth());
     const BorderEdge commonEdgeInfo(style.outlineWidth(), color, style.outlineStyle());
-    BoxBorderPainter(style, outer, inner, commonEdgeInfo).paintBorder(paintInfo, outer);
+    BoxBorderPainter(style, outer, inner, commonEdgeInfo).paintBorder(*layoutObject.enclosingBoxModelObject(), paintInfo, outer);
 }
 
 struct OutlineEdgeInfo {
@@ -222,7 +222,7 @@ void ObjectPainter::paintOutline(const PaintInfo& paintInfo, const LayoutPoint& 
     }
 
     if (unitedOutlineRect == pixelSnappedOutlineRects[0]) {
-        paintSingleRectangleOutline(paintInfo, unitedOutlineRect, styleToUse, color);
+        paintSingleRectangleOutline(m_layoutObject, paintInfo, unitedOutlineRect, styleToUse, color);
         return;
     }
     paintComplexOutline(*paintInfo.context, pixelSnappedOutlineRects, styleToUse, color);

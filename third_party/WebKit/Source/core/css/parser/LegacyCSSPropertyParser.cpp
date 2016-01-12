@@ -655,7 +655,10 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
         break;
 
     /* CSS3 properties */
-
+    case CSSPropertyBorderBoundary:
+        parsedValue = parseBorderBoundary();
+        addProperty(propId, parsedValue.release(), important);
+        return true;
     case CSSPropertyBorderImage:
     case CSSPropertyWebkitMaskBoxImage:
         return parseBorderImageShorthand(propId, important);
@@ -4152,6 +4155,14 @@ bool CSSPropertyParser::parseBorderImageShorthand(CSSPropertyID propId, bool imp
         }
     }
     return false;
+}
+
+PassRefPtrWillBeRawPtr<CSSValue> CSSPropertyParser::parseBorderBoundary()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->id == CSSValueNone || value->id == CSSValueParent || value->id == CSSValueDisplay)
+        return cssValuePool().createIdentifierValue(value->id);
+    return nullptr;
 }
 
 PassRefPtrWillBeRawPtr<CSSValue> CSSPropertyParser::parseBorderImage(CSSPropertyID propId)
