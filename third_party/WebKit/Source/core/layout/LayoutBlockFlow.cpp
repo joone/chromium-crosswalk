@@ -488,6 +488,14 @@ void LayoutBlockFlow::determineLogicalLeftPositionForChild(LayoutBox& child)
             newPosition = std::max(newPosition, positionToAvoidFloats);
     }
 
+    if (child.isPolarPositioned()) {
+         int angle = child.style()->polarAngle();
+         float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
+         float childWidth = child.logicalWidth().toFloat();
+         float childLeft = sin(M_PI / 180 * angle) * radius + logicalWidth().toFloat()/2.0 - childWidth/2.0;
+         newPosition = LayoutUnit(childLeft);
+     }
+
     setLogicalLeftForChild(child, style()->isLeftToRightDirection() ? newPosition : totalAvailableLogicalWidth - newPosition - logicalWidthForChild(child));
 }
 
@@ -606,11 +614,39 @@ void LayoutBlockFlow::layoutBlockChild(LayoutBox& child, MarginInfo& marginInfo,
     // Now check for pagination.
     bool paginated = view()->layoutState()->isPaginated();
     if (paginated) {
+<<<<<<< HEAD
         if (estimateWithoutPagination != newLogicalTop) {
             // We got a new position due to clearance or margin collapsing. Before we attempt to
             // paginate (which may result in the position changing again), let's try again at the
             // new position (since a new position may result in a new logical height).
             positionAndLayoutOnceIfNeeded(child, newLogicalTop, previousFloatLogicalBottom);
+=======
+        logicalTopAfterClear = adjustBlockChildForPagination(logicalTopAfterClear, estimateWithoutPagination, child,
+            atBeforeSideOfBlock && logicalTopBeforeClear == logicalTopAfterClear);
+    }
+
+    if (child.isPolarPositioned()) {
+        int angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
+        float childHeight = child.logicalHeight().toFloat();
+        float childTop = -cos(M_PI / 180 * angle) * radius + logicalWidth().toFloat() / 2.0 - childHeight / 2.0;
+        logicalTopAfterClear = LayoutUnit(childTop);
+    }
+
+    setLogicalTopForChild(child, logicalTopAfterClear);
+
+    // Now we have a final top position. See if it really does end up being different from our estimate.
+    // clearFloatsIfNeeded can also mark the child as needing a layout even though we didn't move. This happens
+    // when collapseMargins dynamically adds overhanging floats because of a child with negative margins.
+    if (logicalTopAfterClear != logicalTopEstimate || child.needsLayout() || (paginated && childLayoutBlockFlow && childLayoutBlockFlow->shouldBreakAtLineToAvoidWidow())) {
+        SubtreeLayoutScope layoutScope(child);
+        if (child.shrinkToAvoidFloats()) {
+            // The child's width depends on the line width.
+            // When the child shifts to clear an item, its width can
+            // change (because it has more available line width).
+            // So go ahead and mark the item as dirty.
+            layoutScope.setChildNeedsLayout(&child);
+>>>>>>> 050ea8cf... [WIP] Add support for the polar coordinate system
         }
 
         newLogicalTop = adjustBlockChildForPagination(newLogicalTop, child, atBeforeSideOfBlock && logicalTopBeforeClear == newLogicalTop);

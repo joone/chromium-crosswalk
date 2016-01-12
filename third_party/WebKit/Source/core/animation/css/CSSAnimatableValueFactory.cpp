@@ -523,6 +523,8 @@ PassRefPtr<AnimatableValue> CSSAnimatableValueFactory::create(CSSPropertyID prop
         return createFromDouble(style.perspective());
     case CSSPropertyPerspectiveOrigin:
         return createFromLengthPoint(style.perspectiveOrigin(), style);
+    case CSSPropertyPolarAngle:
+        return createFromDouble(style.polarAngle());
     case CSSPropertyShapeOutside:
         return createFromShapeValue(style.shapeOutside());
     case CSSPropertyShapeMargin:
