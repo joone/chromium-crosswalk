@@ -487,6 +487,14 @@ void LayoutBlockFlow::determineLogicalLeftPositionForChild(LayoutBox& child)
             newPosition = std::max(newPosition, positionToAvoidFloats);
     }
 
+    if (child.isPolarPositioned()) {
+        int angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance().intValue() / 100.0);
+        float childWidth = child.logicalWidth().toFloat();
+        float childLeft = sin(M_PI / 180 * angle) * radius + logicalWidth().toFloat() / 2.0 - childWidth / 2.0;
+        newPosition = LayoutUnit(childLeft);
+    }
+
     setLogicalLeftForChild(child, style()->isLeftToRightDirection() ? newPosition : totalAvailableLogicalWidth - newPosition - logicalWidthForChild(child));
 }
 
@@ -610,9 +618,17 @@ void LayoutBlockFlow::layoutBlockChild(LayoutBox& child, MarginInfo& marginInfo,
             // paginate (which may result in the position changing again), let's try again at the
             // new position (since a new position may result in a new logical height).
             positionAndLayoutOnceIfNeeded(child, newLogicalTop, previousFloatLogicalBottom);
-        }
 
+        }
         newLogicalTop = adjustBlockChildForPagination(newLogicalTop, child, atBeforeSideOfBlock && logicalTopBeforeClear == newLogicalTop);
+    }
+
+    if (child.isPolarPositioned()) {
+        int angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance().intValue() / 100.0);
+        float childHeight = child.logicalHeight().toFloat();
+        float childTop = -cos(M_PI / 180 * angle) * radius + logicalWidth().toFloat() / 2.0 - childHeight / 2.0;
+        newLogicalTop = LayoutUnit(childTop);
     }
 
     // Clearance, margin collapsing or pagination may have given us a new logical top, in which

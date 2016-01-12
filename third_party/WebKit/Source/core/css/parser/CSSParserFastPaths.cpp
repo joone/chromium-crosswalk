@@ -571,7 +571,15 @@ bool CSSParserFastPaths::isValidKeywordPropertyAndValue(CSSPropertyID propertyId
         // painted | fill | stroke | auto | all | bounding-box
         return valueID == CSSValueVisible || valueID == CSSValueNone || valueID == CSSValueAll || valueID == CSSValueAuto || (valueID >= CSSValueVisiblePainted && valueID <= CSSValueBoundingBox);
     case CSSPropertyPosition: // static | relative | absolute | fixed | sticky
-        return valueID == CSSValueStatic || valueID == CSSValueRelative || valueID == CSSValueAbsolute || valueID == CSSValueFixed || (RuntimeEnabledFeatures::cssStickyPositionEnabled() && valueID == CSSValueSticky);
+        return valueID == CSSValueStatic || valueID == CSSValueRelative || valueID == CSSValueAbsolute || valueID == CSSValueFixed || (RuntimeEnabledFeatures::cssStickyPositionEnabled() && valueID == CSSValueSticky) || valueID == CSSValuePolar;
+    case CSSPropertyPolarAnchorX:
+        return valueID == CSSValueLeft || valueID == CSSValueCenter || valueID == CSSValueRight || valueID == CSSValueTop || valueID == CSSValueBottom;
+    case CSSPropertyPolarAnchorY:
+        return valueID == CSSValueLeft || valueID == CSSValueCenter || valueID == CSSValueRight || valueID == CSSValueTop || valueID == CSSValueBottom;
+    case CSSPropertyPolarOriginX:
+        return valueID == CSSValueLeft || valueID == CSSValueCenter || valueID == CSSValueRight || valueID == CSSValueTop || valueID == CSSValueBottom || valueID == CSSValueAuto;
+    case CSSPropertyPolarOriginY:
+        return valueID == CSSValueLeft || valueID == CSSValueCenter || valueID == CSSValueRight || valueID == CSSValueTop || valueID == CSSValueBottom || valueID == CSSValueAuto;
     case CSSPropertyResize: // none | both | horizontal | vertical | auto
         return valueID == CSSValueNone || valueID == CSSValueBoth || valueID == CSSValueHorizontal || valueID == CSSValueVertical || valueID == CSSValueAuto;
     case CSSPropertyScrollBehavior: // auto | smooth

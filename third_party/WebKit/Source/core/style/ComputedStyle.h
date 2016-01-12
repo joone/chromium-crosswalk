@@ -1048,6 +1048,20 @@ public:
     void setMinHeight(const Length& v) { SET_VAR(m_box, m_minHeight, v); }
     void setMaxHeight(const Length& v) { SET_VAR(m_box, m_maxHeight, v); }
 
+    void setPolarAngle(float v) { SET_VAR(surround, polar.m_angle, v); }
+    void setPolarDistance(const Length& v) { SET_VAR(surround, polar.m_distance, v); }
+    void setPolarOriginX(const Length& v) { SET_VAR(surround, polar.m_origin_x, v); }
+    void setPolarOriginY(const Length& v) { SET_VAR(surround, polar.m_origin_y, v); }
+    void setPolarAnchorX(const Length& v) { SET_VAR(surround, polar.m_anchor_x, v); }
+    void setPolarAnchorY(const Length& v) { SET_VAR(surround, polar.m_anchor_y, v); }
+
+    float polarAngle() const { return surround->polar.angle(); }
+    const Length& polarDistance() const { return surround->polar.distance(); }
+    const Length& polarOriginX() const { return surround->polar.originX(); }
+    const Length& polarOriginY() const { return surround->polar.originY(); }
+    const Length& polarAnchorX() const { return surround->polar.anchorX(); }
+    const Length& polarAnchorY() const { return surround->polar.anchorY(); }
+
     DraggableRegionMode getDraggableRegionMode() const { return rareNonInheritedData->m_draggableRegionMode; }
     void setDraggableRegionMode(DraggableRegionMode v) { SET_VAR(rareNonInheritedData, m_draggableRegionMode, v); }
 
@@ -1604,6 +1618,7 @@ public:
         return true;
     }
 
+
     // A unique style is one that has matches something that makes it impossible to share.
     bool unique() const { return noninherited_flags.unique; }
     void setUnique() { noninherited_flags.unique = true; }
@@ -1659,6 +1674,12 @@ public:
     static EOverflow initialOverflowY() { return OVISIBLE; }
     static EPageBreak initialPageBreak() { return PBAUTO; }
     static EPosition initialPosition() { return StaticPosition; }
+    static Length initialPolarAnchorX() { return Length(); }
+    static Length initialPolarAnchorY() { return Length(); }
+    static Length initialPolarOriginX() { return Length(); }
+    static Length initialPolarOriginY() { return Length(); }
+    static float initialPolarAngle() { return 0; }
+    static Length initialPolarDistance() { return Length(0, Percent); }
     static ETableLayout initialTableLayout() { return TAUTO; }
     static EUnicodeBidi initialUnicodeBidi() { return UBNormal; }
     static ETextTransform initialTextTransform() { return TTNONE; }

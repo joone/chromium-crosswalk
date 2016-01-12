@@ -386,6 +386,24 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
         return result;
     }
     case CSSPropertyBorderImageSource: // <uri> | none | inherit
+    case CSSPropertyObjectPosition:
+        parsedValue = parsePosition(m_valueList);
+        break;
+    case CSSPropertyPolarAngle:
+       validPrimitive = validUnit(value, FAngle);
+        break;
+    case CSSPropertyPolarDistance:
+        validPrimitive = validUnit(value, FLength | FPercent | FNonNeg | unitless);
+        break;
+    case CSSPropertyPolarAnchorX:
+    case CSSPropertyPolarAnchorY:
+    case CSSPropertyPolarOriginX:
+    case CSSPropertyPolarOriginY:
+        if (id == CSSValueAuto)
+            validPrimitive = true;
+        else
+            validPrimitive = validUnit(value, FLength | FPercent | FUnitlessQuirk);
+        break;
     case CSSPropertyWebkitMaskBoxImageSource:
         if (parseFillImage(m_valueList, parsedValue))
             m_valueList->next();

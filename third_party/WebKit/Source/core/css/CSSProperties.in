@@ -255,6 +255,12 @@ perspective interpolable, converter=convertPerspective
 perspective-origin interpolable, converter=convertPosition
 pointer-events inherited
 position
+polar-anchor-x interpolable, initial=initialPolarAnchorX, converter=convertLength
+polar-anchor-y interpolable, initial=initialPolarAnchorY, converter=convertLength
+polar-origin-x interpolable, initial=initialPolarOriginX, converter=convertLength
+polar-origin-y interpolable, initial=initialPolarOriginY, converter=convertLength
+polar-angle type_name=float
+polar-distance interpolable, initial=initialPolarDistance, converter=convertLength
 quotes inherited, converter=convertQuotes
 resize custom_value
 right interpolable, initial=initialOffset, converter=convertLengthOrAuto
