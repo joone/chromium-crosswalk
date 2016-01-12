@@ -138,6 +138,7 @@ void HTMLElement::applyBorderAttributeToStyle(const AtomicString& value, Mutable
 {
     addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderWidth, parseBorderWidthAttribute(value), CSSPrimitiveValue::UnitType::Pixels);
     addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderStyle, CSSValueSolid);
+    addPropertyToPresentationAttributeStyle(style, CSSPropertyBorderBoundary, CSSValueNone);
 }
 
 void HTMLElement::mapLanguageAttributeToLocale(const AtomicString& value, MutableStylePropertySet* style)

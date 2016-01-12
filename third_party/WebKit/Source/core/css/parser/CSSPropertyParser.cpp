@@ -1421,6 +1421,10 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
     case CSSPropertyBorderColor:
         // <color>{1,4} | inherit
         return parse4Values(propId, borderColorShorthand().properties(), important);
+    case CSSPropertyBorderBoundary:
+        parsedValue = parseBorderBoundary();
+        addProperty(propId, parsedValue.release(), important);
+        return true;
     case CSSPropertyBorderWidth:
         // <border-width>{1,4} | inherit
         return parse4Values(propId, borderWidthShorthand().properties(), important);
@@ -3007,6 +3011,14 @@ PassRefPtrWillBeRawPtr<CSSValue> CSSPropertyParser::parseAnimationFillMode()
 {
     CSSParserValue* value = m_valueList->current();
     if (value->id == CSSValueNone || value->id == CSSValueForwards || value->id == CSSValueBackwards || value->id == CSSValueBoth)
+        return cssValuePool().createIdentifierValue(value->id);
+    return nullptr;
+}
+
+PassRefPtrWillBeRawPtr<CSSValue> CSSPropertyParser::parseBorderBoundary()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->id == CSSValueNone || value->id == CSSValueParent || value->id == CSSValueDisplay)
         return cssValuePool().createIdentifierValue(value->id);
     return nullptr;
 }

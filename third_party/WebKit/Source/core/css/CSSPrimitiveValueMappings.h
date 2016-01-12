@@ -303,6 +303,17 @@ template<> inline CSSPrimitiveValue::operator EBorderStyle() const
     return (EBorderStyle)(m_value.valueID - CSSValueNone);
 }
 
+template<> inline CSSPrimitiveValue::operator EBorderBoundary() const
+{
+    ASSERT(isValueID());
+    if (m_value.valueID == CSSValueNone)
+        return BOUNDARY_NONE;
+    else if (m_value.valueID == CSSValueDisplay)
+        return DISPLAY;
+    else
+       return PARENT;
+}
+
 template<> inline CSSPrimitiveValue::operator OutlineIsAuto() const
 {
     if (m_value.valueID == CSSValueAuto)

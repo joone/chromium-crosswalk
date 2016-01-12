@@ -77,6 +77,8 @@ enum EBorderCollapse { BSEPARATE = 0, BCOLLAPSE = 1 };
 // not change this order! This order also must match the order in CSSValueKeywords.in.
 enum EBorderStyle { BNONE, BHIDDEN, INSET, GROOVE, OUTSET, RIDGE, DOTTED, DASHED, SOLID, DOUBLE };
 
+enum EBorderBoundary { BOUNDARY_NONE, DISPLAY, PARENT };
+
 enum EBorderPrecedence { BOFF, BTABLE, BCOLGROUP, BCOL, BROWGROUP, BROW, BCELL };
 
 enum OutlineIsAuto { AUTO_OFF = 0, AUTO_ON };

@@ -125,6 +125,7 @@ background-repeat-x custom_all
 background-repeat-y custom_all
 background-size interpolable, custom_all
 baseline-shift interpolable, svg, custom_inherit, custom_value
+border-boundary
 border-bottom-color interpolable, custom_all
 border-bottom-left-radius interpolable, initial=initialBorderRadius, converter=convertRadius
 border-bottom-right-radius interpolable, initial=initialBorderRadius, converter=convertRadius

@@ -65,7 +65,7 @@ void ObjectPainter::paintOutline(const PaintInfo& paintInfo, const LayoutRect& o
 
     const BorderEdge commonEdgeInfo(outlineWidth,
         m_layoutObject.resolveColor(styleToUse, CSSPropertyOutlineColor), styleToUse.outlineStyle());
-    BoxBorderPainter(styleToUse, outer, inner, commonEdgeInfo).paintBorder(paintInfo, outer);
+    BoxBorderPainter(styleToUse, outer, inner, commonEdgeInfo).paintBorder(*m_layoutObject.enclosingBoxModelObject(), paintInfo, outer);
 }
 
 void ObjectPainter::addPDFURLRectIfNeeded(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)

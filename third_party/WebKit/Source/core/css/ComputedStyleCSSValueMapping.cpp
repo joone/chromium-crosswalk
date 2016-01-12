@@ -2393,6 +2393,13 @@ PassRefPtrWillBeRawPtr<CSSValue> ComputedStyleCSSValueMapping::get(CSSPropertyID
         return valuesForShorthandProperty(borderTopShorthand(), style, layoutObject, styledNode, allowVisitedStyle);
     case CSSPropertyBorderWidth:
         return valuesForSidesShorthand(borderWidthShorthand(), style, layoutObject, styledNode, allowVisitedStyle);
+    case CSSPropertyBorderBoundary:
+        if (style.borderBoundary() == DISPLAY)
+            return cssValuePool().createIdentifierValue(CSSValueDisplay);
+        else if (style.borderBoundary() == PARENT)
+            return cssValuePool().createIdentifierValue(CSSValueParent);
+        else
+            return cssValuePool().createIdentifierValue(CSSValueNone);
     case CSSPropertyWebkitColumnRule:
         return valuesForShorthandProperty(webkitColumnRuleShorthand(), style, layoutObject, styledNode, allowVisitedStyle);
     case CSSPropertyWebkitColumns:

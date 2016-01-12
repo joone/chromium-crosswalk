@@ -86,6 +86,7 @@ static const CSSPropertyID staticComputableProperties[] = {
     CSSPropertyBorderTopRightRadius,
     CSSPropertyBorderTopStyle,
     CSSPropertyBorderTopWidth,
+    CSSPropertyBorderBoundary,
     CSSPropertyBottom,
     CSSPropertyBoxShadow,
     CSSPropertyBoxSizing,

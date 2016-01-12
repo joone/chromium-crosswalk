@@ -181,7 +181,8 @@ protected:
                 && (m_printColorAdjust == other.m_printColorAdjust)
                 && (_pointerEvents == other._pointerEvents)
                 && (_insideLink == other._insideLink)
-                && (m_writingMode == other.m_writingMode);
+                && (m_writingMode == other.m_writingMode)
+                && (borderBoundary == other.borderBoundary);
         }
 
         bool operator!=(const InheritedFlags& other) const { return !(*this == other); }
@@ -209,6 +210,8 @@ protected:
 
         // CSS Text Layout Module Level 3: Vertical writing support
         unsigned m_writingMode : 2; // WritingMode
+
+        unsigned borderBoundary : 2; // EBorderBoundary
         // 42 bits
     } inherited_flags;
 
@@ -308,6 +311,7 @@ protected:
         inherited_flags._pointerEvents = initialPointerEvents();
         inherited_flags._insideLink = NotInsideLink;
         inherited_flags.m_writingMode = initialWritingMode();
+        inherited_flags.borderBoundary = initialBorderBoundary();
 
         noninherited_flags.effectiveDisplay = noninherited_flags.originalDisplay = initialDisplay();
         noninherited_flags.overflowX = initialOverflowX();
@@ -522,6 +526,7 @@ public:
     EBorderStyle borderTopStyle() const { return surround->border.top().style(); }
     int borderBottomWidth() const { return surround->border.borderBottomWidth(); }
     EBorderStyle borderBottomStyle() const { return surround->border.bottom().style(); }
+    EBorderBoundary borderBoundary() const { return static_cast<EBorderBoundary>(inherited_flags.borderBoundary); }
 
     int borderBeforeWidth() const;
     int borderAfterWidth() const;
@@ -1069,6 +1074,7 @@ public:
     FloatRoundedRect getRoundedInnerBorderFor(const LayoutRect& borderRect,
         const LayoutRectOutsets insets, bool includeLogicalLeftEdge, bool includeLogicalRightEdge) const;
 
+    void setBorderBoundary(EBorderBoundary v) { inherited_flags.borderBoundary = v; }
     void setBorderLeftWidth(unsigned v) { SET_VAR(surround, border.m_left.m_width, v); }
     void setBorderLeftStyle(EBorderStyle v) { SET_VAR(surround, border.m_left.m_style, v); }
     void setBorderLeftColor(const StyleColor& v) { SET_BORDERVALUE_COLOR(surround, border.m_left, v); }
@@ -1670,6 +1676,7 @@ public:
     static PassRefPtr<ScaleTransformOperation> initialScale() { return ScaleTransformOperation::create(1, 1, 1, TransformOperation::Scale3D); }
     static Length initialTransformOriginX() { return Length(50.0, Percent); }
     static Length initialTransformOriginY() { return Length(50.0, Percent); }
+    static EBorderBoundary initialBorderBoundary() { return BOUNDARY_NONE; }
     static float initialTransformOriginZ() { return 0; }
     static TransformOrigin initialTransformOrigin() { return TransformOrigin(Length(50.0, Percent), Length(50.0, Percent), 0); }
     static EPointerEvents initialPointerEvents() { return PE_AUTO; }

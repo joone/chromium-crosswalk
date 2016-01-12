@@ -660,6 +660,12 @@ content-box
 padding
 padding-box
 
+//
+// border-boundary
+//
+parent
+display
+
 // CSS 3 SHAPES
 margin-box
 

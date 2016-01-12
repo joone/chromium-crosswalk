@@ -687,6 +687,8 @@ bool CSSParserFastPaths::isValidKeywordPropertyAndValue(CSSPropertyID propertyId
     case CSSPropertyScrollSnapType: // none | mandatory | proximity
         ASSERT(RuntimeEnabledFeatures::cssScrollSnapPointsEnabled());
         return valueID == CSSValueNone || valueID == CSSValueMandatory || valueID == CSSValueProximity;
+    case CSSPropertyBorderBoundary:
+        return valueID == CSSValueNone || valueID == CSSValueDisplay || valueID == CSSValueParent;
     default:
         ASSERT_NOT_REACHED();
         return false;
