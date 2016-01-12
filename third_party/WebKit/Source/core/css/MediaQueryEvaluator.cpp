@@ -355,7 +355,7 @@ static bool computeLength(const MediaQueryExpValue& value, const MediaValues& me
         return !mediaValues.strictMode() || !result;
     }
 
-    if (value.unit == CSSPrimitiveValue::CSS_PERCENTAGE) {
+    if (value.unit == CSSPrimitiveValue::UnitType::Percentage) {
         result = clampTo<int>(mediaValues.deviceWidth() * (std::min<double>(50, value.value) / 100));
         return true;
     }
