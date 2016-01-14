@@ -1376,7 +1376,7 @@ private:
         ADD_BOOLEAN_BITFIELD(isSlowRepaintObject, IsSlowRepaintObject);
 
     private:
-        unsigned m_positionedState : 2; // PositionedState
+        unsigned m_positionedState : 3; // PositionedState
         unsigned m_selectionState : 3; // SelectionState
         unsigned m_boxDecorationBackgroundState : 2; // BoxDecorationBackgroundState
         unsigned m_fullPaintInvalidationReason : 5; // PaintInvalidationReason
@@ -1392,7 +1392,7 @@ private:
         void setPositionedState(int positionState)
         {
             // This mask maps FixedPosition and AbsolutePosition to IsOutOfFlowPositioned, saving one bit.
-            m_positionedState = static_cast<PositionedState>(positionState & 0x3);
+            m_positionedState = static_cast<PositionedState>(positionState & 0x7);
         }
         void clearPositionedState() { m_positionedState = StaticPosition; }
 
