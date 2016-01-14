@@ -1777,7 +1777,7 @@ private:
         void setPositionedState(int positionState)
         {
             // This mask maps FixedPosition and AbsolutePosition to IsOutOfFlowPositioned, saving one bit.
-            m_positionedState = static_cast<PositionedState>(positionState & 0x3);
+            m_positionedState = static_cast<PositionedState>(positionState & 0x7);
         }
         void clearPositionedState() { m_positionedState = StaticPosition; }
 

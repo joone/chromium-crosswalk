@@ -489,12 +489,12 @@ void LayoutBlockFlow::determineLogicalLeftPositionForChild(LayoutBox& child)
     }
 
     if (child.isPolarPositioned()) {
-         int angle = child.style()->polarAngle();
-         float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
-         float childWidth = child.logicalWidth().toFloat();
-         float childLeft = sin(M_PI / 180 * angle) * radius + logicalWidth().toFloat()/2.0 - childWidth/2.0;
-         newPosition = LayoutUnit(childLeft);
-     }
+        int angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance() / 100.0);
+        float childWidth = child.logicalWidth().toFloat();
+        float childLeft = sin(M_PI / 180 * angle) * radius + logicalWidth().toFloat() / 2.0 - childWidth / 2.0;
+        newPosition = LayoutUnit(childLeft);
+    }
 
     setLogicalLeftForChild(child, style()->isLeftToRightDirection() ? newPosition : totalAvailableLogicalWidth - newPosition - logicalWidthForChild(child));
 }
