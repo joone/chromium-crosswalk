@@ -64,7 +64,7 @@ static inline bool featureWithValidIdent(const String& mediaFeature, CSSValueID 
 
 static inline bool featureWithValidDeviceRadius(const String& mediaFeature, const CSSParserToken& token)
 {
-    if (!(CSSPrimitiveValue::isLength(token.unitType()) || (token.type() == PercentageToken && token.numericValue() == 0)) || token.numericValue() < 0)
+    if (token.type() != PercentageToken || token.numericValue() < 0)
         return false;
 
     return mediaFeature == deviceRadiusMediaFeature
