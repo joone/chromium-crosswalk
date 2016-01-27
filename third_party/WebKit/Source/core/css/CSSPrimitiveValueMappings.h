@@ -281,15 +281,39 @@ template<> inline EBorderStyle CSSPrimitiveValue::convertTo() const
     return (EBorderStyle)(m_value.valueID - CSSValueNone);
 }
 
-template<> inline CSSPrimitiveValue::operator EBorderBoundary() const
+template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EBorderBoundary e)
+    : CSSValue(PrimitiveClass)
+{
+	 init(UnitType::ValueID);
+	 switch (e) {
+	 case BOUNDARY_NONE:
+	    m_value.valueID = CSSValueNone;
+	    break;
+	 case DISPLAY:
+	    m_value.valueID = CSSValueDisplay;
+	    break;
+	 case PARENT:
+        m_value.valueID = CSSValueParent;
+        break;
+	 }
+}
+
+template<> inline EBorderBoundary CSSPrimitiveValue::convertTo() const
 {
     ASSERT(isValueID());
-    if (m_value.valueID == CSSValueNone)
+    switch (m_value.valueID) {
+    case CSSValueNone:
         return BOUNDARY_NONE;
-    else if (m_value.valueID == CSSValueDisplay)
+    case CSSValueDisplay:
         return DISPLAY;
-    else
-       return PARENT;
+    case CSSValueParent:
+        return PARENT;
+    default:
+        break;
+    }
+
+    ASSERT_NOT_REACHED();
+    return DISPLAY;
 }
 
 template<> inline OutlineIsAuto CSSPrimitiveValue::convertTo() const
@@ -1811,7 +1835,7 @@ template<> inline EPageBreak CSSPrimitiveValue::convertTo() const
 }
 
 // CSS Round Display
-template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EPolarAnchor e)
+template<> inline CSSPrimitiveValue::CSSPrimitiveValue(blink::EPolarAnchor e)
     : CSSValue(PrimitiveClass)
 {
     init(UnitType::ValueID);
@@ -1837,7 +1861,8 @@ template<> inline CSSPrimitiveValue::CSSPrimitiveValue(EPolarAnchor e)
     }
 }
 
-template<> inline CSSPrimitiveValue::operator EPolarAnchor() const
+
+template<> inline blink::EPolarAnchor CSSPrimitiveValue::convertTo() const
 {
     ASSERT(isValueID());
     switch (m_value.valueID) {
