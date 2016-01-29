@@ -386,8 +386,6 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
         return result;
     }
     case CSSPropertyBorderImageSource: // <uri> | none | inherit
-    case CSSPropertyObjectPosition:
-        parsedValue = parsePosition(m_valueList);
         break;
     case CSSPropertyPolarAngle:
        validPrimitive = validUnit(value, FAngle);
