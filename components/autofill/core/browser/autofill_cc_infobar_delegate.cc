@@ -63,7 +63,7 @@ int AutofillCCInfoBarDelegate::GetIconId() const {
 
 gfx::VectorIconId AutofillCCInfoBarDelegate::GetVectorIconId() const {
 #if !defined(OS_MACOSX) && !defined(OS_IOS) && !defined(OS_ANDROID)
-  return gfx::VectorIconId::AUTOFILL;
+  return gfx::VectorIconId::VECTOR_ICON_NONE;
 #else
   return gfx::VectorIconId::VECTOR_ICON_NONE;
 #endif
