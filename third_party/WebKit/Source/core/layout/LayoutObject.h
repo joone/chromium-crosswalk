@@ -640,6 +640,7 @@ public:
     bool isRelPositioned() const { return m_bitfields.isRelPositioned(); } // relative positioning
     bool isStickyPositioned() const { return m_bitfields.isStickyPositioned(); } // sticky positioning
     bool isPositioned() const { return m_bitfields.isPositioned(); }
+    bool isPolarPositioned() const { return style()->hasPolar(); } // absolute positioning with polar-angle and polar-distance
 
     bool isText() const  { return m_bitfields.isText(); }
     bool isBox() const { return m_bitfields.isBox(); }

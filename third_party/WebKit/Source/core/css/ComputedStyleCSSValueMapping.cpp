@@ -177,6 +177,18 @@ static PassRefPtrWillBeRawPtr<CSSValue> valueForPositionOffset(const ComputedSty
     case CSSPropertyBottom:
         offset = style.bottom();
         break;
+    case CSSPropertyPolarOriginX:
+        offset = style.polarOriginX();
+        break;
+    case CSSPropertyPolarOriginY:
+        offset = style.polarOriginY();
+        break;
+    case CSSPropertyPolarAnchorX:
+        offset = style.polarAnchorX();
+        break;
+    case CSSPropertyPolarAnchorY:
+        offset = style.polarAnchorY();
+        break;
     default:
         return nullptr;
     }
@@ -192,6 +204,20 @@ static PassRefPtrWillBeRawPtr<CSSValue> valueForPositionOffset(const ComputedSty
         // In other words if left is auto and right is not auto, then left's computed value is negative right().
         // So we should get the opposite length unit and see if it is auto.
         return cssValuePool().createIdentifierValue(CSSValueAuto);
+    }
+
+    return zoomAdjustedPixelValueForLength(offset, style);
+}
+
+static PassRefPtrWillBeRawPtr<CSSValue> valueForDistanceOffset(const ComputedStyle& style, CSSPropertyID propertyID, const LayoutObject* layoutObject)
+{
+    Length offset;
+
+    if (offset.hasPercent() && layoutObject && layoutObject->isBox() && layoutObject->isPositioned()) {
+        LayoutUnit containingBlockSize = (propertyID == CSSPropertyLeft || propertyID == CSSPropertyRight) ?
+            toLayoutBox(layoutObject)->containingBlockLogicalWidthForContent() :
+            toLayoutBox(layoutObject)->containingBlockLogicalHeightForGetComputedStyle();
+        return zoomAdjustedPixelValue(valueForLength(offset, containingBlockSize), style);
     }
 
     return zoomAdjustedPixelValueForLength(offset, style);
@@ -1928,6 +1954,15 @@ PassRefPtrWillBeRawPtr<CSSValue> ComputedStyleCSSValueMapping::get(CSSPropertyID
     }
     case CSSPropertyPosition:
         return cssValuePool().createValue(style.position());
+    case CSSPropertyPolarOriginX:
+    case CSSPropertyPolarOriginY:
+    case CSSPropertyPolarAnchorX:
+    case CSSPropertyPolarAnchorY:
+        return valueForPositionOffset(style, propertyID, layoutObject);
+    case CSSPropertyPolarAngle:
+        return cssValuePool().createValue(style.polarAngle(), CSSPrimitiveValue::UnitType::Degrees);
+    case CSSPropertyPolarDistance:
+        return valueForDistanceOffset(style, propertyID, layoutObject);
     case CSSPropertyQuotes:
         if (!style.quotes()) {
             // TODO(ramya.v): We should return the quote values that we're actually using.

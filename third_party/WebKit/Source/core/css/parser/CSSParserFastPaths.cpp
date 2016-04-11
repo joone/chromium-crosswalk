@@ -25,6 +25,10 @@ static inline bool isSimpleLengthPropertyID(CSSPropertyID propertyId, bool& acce
     case CSSPropertyWidth:
     case CSSPropertyMinHeight:
     case CSSPropertyMinWidth:
+    case CSSPropertyPolarAnchorX:
+    case CSSPropertyPolarAnchorY:
+    case CSSPropertyPolarOriginX:
+    case CSSPropertyPolarOriginY:
     case CSSPropertyPaddingBottom:
     case CSSPropertyPaddingLeft:
     case CSSPropertyPaddingRight:

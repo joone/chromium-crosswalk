@@ -551,6 +551,14 @@ int UseCounter::mapCSSPropertyIdToCSSSampleIdForHistogram(int id)
     case CSSPropertyContain: return 517;
     case CSSPropertyD: return 518;
     case CSSPropertyBorderBoundary: return 519;
+    case CSSPropertyPolarAngle: return 520;
+    case CSSPropertyPolarDistance: return 521;
+    case CSSPropertyPolarAnchor: return 522;
+    case CSSPropertyPolarAnchorX: return 523;
+    case CSSPropertyPolarAnchorY: return 524;
+    case CSSPropertyPolarOrigin: return 525;
+    case CSSPropertyPolarOriginX: return 526;
+    case CSSPropertyPolarOriginY: return 527;
 
     // 1. Add new features above this line (don't change the assigned numbers of the existing
     // items).

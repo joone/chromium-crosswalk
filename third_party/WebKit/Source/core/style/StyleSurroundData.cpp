@@ -21,11 +21,19 @@
 
 #include "core/style/StyleSurroundData.h"
 
+#include "core/style/ComputedStyle.h"
+
 namespace blink {
 
 StyleSurroundData::StyleSurroundData()
     : margin(Fixed)
     , padding(Fixed)
+    , polar(ComputedStyle::initialPolarAngle(),
+            ComputedStyle::initialPolarDistance(),
+            ComputedStyle::initialPolarOriginX(),
+            ComputedStyle::initialPolarOriginY(),
+            ComputedStyle::initialPolarAnchorX(),
+            ComputedStyle::initialPolarAnchorY())
 {
 }
 
@@ -35,12 +43,13 @@ StyleSurroundData::StyleSurroundData(const StyleSurroundData& o)
     , margin(o.margin)
     , padding(o.padding)
     , border(o.border)
+    , polar(o.polar)
 {
 }
 
 bool StyleSurroundData::operator==(const StyleSurroundData& o) const
 {
-    return offset == o.offset && margin == o.margin && padding == o.padding && border == o.border;
+    return offset == o.offset && margin == o.margin && padding == o.padding && border == o.border && polar == o.polar;
 }
 
 } // namespace blink

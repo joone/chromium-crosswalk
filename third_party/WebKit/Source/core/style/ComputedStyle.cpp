@@ -900,6 +900,10 @@ bool ComputedStyle::hasWillChangeCompositingHint() const
         case CSSPropertyLeft:
         case CSSPropertyBottom:
         case CSSPropertyRight:
+        case CSSPropertyPolarAnchorX:
+        case CSSPropertyPolarAnchorY:
+        case CSSPropertyPolarOriginX:
+        case CSSPropertyPolarOriginY:
             return true;
         default:
             break;

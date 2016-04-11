@@ -255,6 +255,12 @@ perspective interpolable, converter=convertPerspective
 perspective-origin interpolable, converter=convertPosition
 pointer-events inherited
 position
+polar-anchor-x interpolable, initial=initialPolarAnchorX, converter=convertLength
+polar-anchor-y interpolable, initial=initialPolarAnchorY, converter=convertLength
+polar-origin-x interpolable, initial=initialPolarOriginX, converter=convertLength
+polar-origin-y interpolable, initial=initialPolarOriginY, converter=convertLength
+polar-angle type_name=float
+polar-distance interpolable, initial=initialPolarDistance, converter=convertLength
 quotes inherited, converter=convertQuotes
 resize custom_value
 right interpolable, initial=initialOffset, converter=convertLengthOrAuto
@@ -477,6 +483,8 @@ motion longhands=motion-path;motion-offset;motion-rotation
 outline longhands=outline-color;outline-style;outline-width
 overflow longhands=overflow-x;overflow-y
 padding longhands=padding-top;padding-right;padding-bottom;padding-left
+polar-anchor longhands=polar-anchor-x;polar-anchor-y
+polar-origin longhands=polar-origin-x;polar-origin-y
 transition longhands=transition-property;transition-duration;transition-timing-function;transition-delay
 -webkit-border-after longhands=-webkit-border-after-width;-webkit-border-after-style;-webkit-border-after-color
 -webkit-border-before longhands=-webkit-border-before-width;-webkit-border-before-style;-webkit-border-before-color

@@ -150,6 +150,12 @@ static const CSSPropertyID staticComputableProperties[] = {
     CSSPropertyPageBreakAfter,
     CSSPropertyPageBreakBefore,
     CSSPropertyPageBreakInside,
+    CSSPropertyPolarAnchorX,
+    CSSPropertyPolarAnchorY,
+    CSSPropertyPolarOriginX,
+    CSSPropertyPolarOriginY,
+    CSSPropertyPolarAngle,
+    CSSPropertyPolarDistance,
     CSSPropertyPointerEvents,
     CSSPropertyPosition,
     CSSPropertyResize,
@@ -477,6 +483,10 @@ static bool isLayoutDependent(CSSPropertyID propertyID, const ComputedStyle* sty
     case CSSPropertyTranslate:
     case CSSPropertyTransformOrigin:
     case CSSPropertyWidth:
+    case CSSPropertyPolarAnchorX:
+    case CSSPropertyPolarAnchorY:
+    case CSSPropertyPolarOriginX:
+    case CSSPropertyPolarOriginY:
         return layoutObject->isBox();
     case CSSPropertyMargin:
         return layoutObject->isBox()

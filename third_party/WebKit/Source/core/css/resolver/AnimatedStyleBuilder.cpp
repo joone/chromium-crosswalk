@@ -598,6 +598,9 @@ void AnimatedStyleBuilder::applyProperty(CSSPropertyID property, StyleResolverSt
     case CSSPropertyPerspectiveOrigin:
         style->setPerspectiveOrigin(animatableValueToLengthPoint(value, state));
         return;
+    case CSSPropertyPolarAngle:
+        style->setPolarAngle(animatableValueClampTo<unsigned>(value));
+        return;
     case CSSPropertyShapeOutside:
         style->setShapeOutside(toAnimatableShapeValue(value)->shapeValue());
         return;

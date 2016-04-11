@@ -27,6 +27,7 @@
 
 #include "core/style/BorderData.h"
 #include "platform/LengthBox.h"
+#include "platform/LengthPolar.h"
 #include "wtf/PassRefPtr.h"
 #include "wtf/RefCounted.h"
 
@@ -47,6 +48,7 @@ public:
     LengthBox margin;
     LengthBox padding;
     BorderData border;
+    LengthPolar polar;
 
 private:
     StyleSurroundData();

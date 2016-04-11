@@ -251,6 +251,13 @@ void StyleAdjuster::adjustComputedStyle(ComputedStyle& style, const ComputedStyl
         if (isSVGTextElement(*element))
             style.clearMultiCol();
     }
+    
+    // Text should be center aligned by default in the polar coordinate.
+    if (style.hasPolar()) {
+        if (style.textAlign() == TASTART)
+            style.setTextAlign(WEBKIT_CENTER);
+    }
+
     adjustStyleForAlignment(style, parentStyle);
 }
 

@@ -487,6 +487,19 @@ void LayoutBlockFlow::determineLogicalLeftPositionForChild(LayoutBox& child)
             newPosition = std::max(newPosition, positionToAvoidFloats);
     }
 
+    if (child.isPolarPositioned()) {
+        float angle = child.style()->polarAngle();
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance().value() / 100.0);
+        float anchorX = child.logicalWidth().toFloat() * child.style()->polarAnchorX().percent() / 100.0;
+        float originX;
+        if (child.style()->polarOriginX().isAuto())
+            originX =  logicalWidth().toFloat() / 2.0;
+        else
+            originX = logicalWidth().toFloat() *  child.style()->polarOriginX().percent() / 100.0;
+        float childLeft = sin(M_PI / 180 * angle) * radius + originX - anchorX;
+        newPosition = LayoutUnit(childLeft);
+    }
+
     setLogicalLeftForChild(child, style()->isLeftToRightDirection() ? newPosition : totalAvailableLogicalWidth - newPosition - logicalWidthForChild(child));
 }
 
@@ -613,6 +626,22 @@ void LayoutBlockFlow::layoutBlockChild(LayoutBox& child, MarginInfo& marginInfo,
         }
 
         newLogicalTop = adjustBlockChildForPagination(newLogicalTop, child, atBeforeSideOfBlock && logicalTopBeforeClear == newLogicalTop);
+    }
+
+    if (child.isPolarPositioned()) {
+        float angle = child.style()->polarAngle();
+        // FIXME: If parent is not a perfect square, we should get the radius from ellipse function.
+        float radius = logicalWidth().toFloat() / 2.0  * (child.style()->polarDistance().value() / 100.0);
+        float anchorY = child.logicalHeight().toFloat() * child.style()->polarAnchorY().percent() / 100.0;
+        // FIXME: logicalWidth should be logicalHeight, but the logicalHeight is not set yet.
+        //        So we may need to move this code to somewhere.
+        float originY;
+        if (child.style()->polarOriginX().isAuto())
+            originY = logicalWidth().toFloat() / 2.0;
+        else
+            originY = logicalWidth().toFloat() * child.style()->polarOriginY().percent() / 100.0;
+        float childTop = -cos(M_PI / 180 * angle) * radius + originY - anchorY;
+        newLogicalTop = LayoutUnit(childTop);
     }
 
     // Clearance, margin collapsing or pagination may have given us a new logical top, in which

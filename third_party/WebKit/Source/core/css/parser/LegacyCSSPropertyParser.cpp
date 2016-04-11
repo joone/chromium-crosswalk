@@ -350,6 +350,12 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
     case CSSPropertyBackgroundPositionY:
     case CSSPropertyBackgroundSize:
     case CSSPropertyBackgroundRepeat:
+    case CSSPropertyPolarAnchor:
+    case CSSPropertyPolarAnchorX:
+    case CSSPropertyPolarAnchorY:
+    case CSSPropertyPolarOrigin:
+    case CSSPropertyPolarOriginX:
+    case CSSPropertyPolarOriginY:
     case CSSPropertyWebkitMaskClip:
     case CSSPropertyWebkitMaskComposite:
     case CSSPropertyWebkitMaskImage:
@@ -369,6 +375,8 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
         if (parseFillProperty(unresolvedProperty, propId1, propId2, val1, val2)) {
             if (propId == CSSPropertyBackgroundPosition ||
                 propId == CSSPropertyBackgroundRepeat ||
+                propId == CSSPropertyPolarOrigin ||
+                propId == CSSPropertyPolarAnchor ||
                 propId == CSSPropertyWebkitMaskPosition ||
                 propId == CSSPropertyWebkitMaskRepeat) {
                 ShorthandScope scope(this, propId);
@@ -386,6 +394,15 @@ bool CSSPropertyParser::parseValue(CSSPropertyID unresolvedProperty, bool import
         return result;
     }
     case CSSPropertyBorderImageSource: // <uri> | none | inherit
+    case CSSPropertyObjectPosition:
+        parsedValue = parsePosition(m_valueList);
+        break;
+    case CSSPropertyPolarAngle:
+        validPrimitive = validUnit(value, FAngle);
+        break;
+    case CSSPropertyPolarDistance:
+        validPrimitive = validUnit(value, FLength | FPercent | FNonNeg | unitless);
+        break;
     case CSSPropertyWebkitMaskBoxImageSource:
         if (parseFillImage(m_valueList, parsedValue))
             m_valueList->next();
@@ -1649,6 +1666,12 @@ bool CSSPropertyParser::parseFillProperty(CSSPropertyID propId, CSSPropertyID& p
     if (propId == CSSPropertyBackgroundPosition) {
         propId1 = CSSPropertyBackgroundPositionX;
         propId2 = CSSPropertyBackgroundPositionY;
+    } else if (propId == CSSPropertyPolarOrigin) {
+        propId1 = CSSPropertyPolarOriginX;
+        propId2 = CSSPropertyPolarOriginY;
+    } else if (propId == CSSPropertyPolarAnchor) {
+        propId1 = CSSPropertyPolarAnchorX;
+        propId2 = CSSPropertyPolarAnchorY;
     } else if (propId == CSSPropertyWebkitMaskPosition) {
         propId1 = CSSPropertyWebkitMaskPositionX;
         propId2 = CSSPropertyWebkitMaskPositionY;
@@ -1719,18 +1742,24 @@ bool CSSPropertyParser::parseFillProperty(CSSPropertyID propId, CSSPropertyID& p
                 unitless = FUnitlessQuirk;
             // fall-through
         case CSSPropertyWebkitMaskPosition:
+        case CSSPropertyPolarAnchor:
+        case CSSPropertyPolarOrigin:
             parseFillPosition(m_valueList, currValue, currValue2, unitless);
             // parseFillPosition advances the m_valueList pointer.
             break;
         case CSSPropertyBackgroundPositionX:
-        case CSSPropertyWebkitMaskPositionX: {
+        case CSSPropertyWebkitMaskPositionX:
+        case CSSPropertyPolarOriginX:
+        case CSSPropertyPolarAnchorX: {
             currValue = parseFillPositionX(m_valueList);
             if (currValue)
                 m_valueList->next();
             break;
         }
         case CSSPropertyBackgroundPositionY:
-        case CSSPropertyWebkitMaskPositionY: {
+        case CSSPropertyWebkitMaskPositionY:
+        case CSSPropertyPolarOriginY:
+        case CSSPropertyPolarAnchorY: {
             currValue = parseFillPositionY(m_valueList);
             if (currValue)
                 m_valueList->next();
