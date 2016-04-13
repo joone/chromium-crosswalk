@@ -198,6 +198,7 @@ WebPreferences::WebPreferences()
       ignore_main_frame_overflow_hidden_quirk(false),
       report_screen_size_in_physical_pixels_quirk(false),
       record_whole_document(false),
+      device_radius(0),
 #endif
 #if defined(OS_ANDROID)
       default_minimum_page_scale_factor(0.25f),
